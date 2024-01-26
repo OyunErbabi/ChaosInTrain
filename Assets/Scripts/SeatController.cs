@@ -8,6 +8,7 @@ public class SeatController : MonoBehaviour
     public Sprite SeatWithGlue;
 
     SpriteRenderer renderer;
+    bool isGlued;
 
     private void Start()
     {
@@ -22,5 +23,19 @@ public class SeatController : MonoBehaviour
     public void ChangeToEmpty()
     {
         renderer.sprite = SeatEmpty;
+    }
+
+    public void ToggleSeatStatus()
+    {
+        if (isGlued)
+        {
+            ChangeToEmpty();
+        }
+        else
+        {
+            ChangeToGlue();
+        }
+
+        isGlued = !isGlued;
     }
 }

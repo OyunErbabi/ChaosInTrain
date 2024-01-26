@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
             FindNearestSeat();
             if (nearestSeat != null)
             {
-                nearestSeat.GetComponent<SeatController>().ChangeToGlue();
+                nearestSeat.GetComponent<SeatController>().ToggleSeatStatus();
             }
         }
 
