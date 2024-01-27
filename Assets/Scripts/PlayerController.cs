@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     GameObject train;
 
     GameObject nearestSeat;
+    GameObject LastSeat; 
 
     public Animator animator;
 
@@ -54,10 +55,31 @@ public class PlayerController : MonoBehaviour
 
             FlipCharacter();
             controller.Move(move * Time.deltaTime * 10);
+            FindNearestSeat();
+            if(LastSeat == null)
+            {
+                LastSeat = nearestSeat;
+                ArrowAnimator.Instance.MoveArrowPosition(nearestSeat);
+            }
+            else if (nearestSeat != LastSeat)
+            {
+                LastSeat = nearestSeat;
+
+                if(LastSeat.GetComponent<SeatController>().status == SeatStatus.Empty)
+                {
+                    ArrowAnimator.Instance.ToggleArrow(true);
+                }
+                else
+                {
+                    ArrowAnimator.Instance.ToggleArrow(false);
+                }
+
+                ArrowAnimator.Instance.MoveArrowPosition(nearestSeat);
+            }
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                FindNearestSeat();
+                //FindNearestSeat();
                 if (nearestSeat != null)
                 {
                     nearestSeat.GetComponent<SeatController>().ToggleSeatStatus();
