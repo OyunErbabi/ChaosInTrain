@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         controller = GetComponent<CharacterController>();
+        
     }
 
     private void Update()
@@ -53,6 +54,11 @@ public class PlayerController : MonoBehaviour
             {
                 nearestSeat.GetComponent<SeatController>().ToggleSeatStatus();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            BananaController.Instance.PlaceBananaAtPlayerFeet();
         }
 
     }

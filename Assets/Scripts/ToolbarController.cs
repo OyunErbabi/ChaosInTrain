@@ -13,7 +13,6 @@ public class ToolbarController : MonoBehaviour
     public GameObject ToolItem;
     public GameObject BottomPanel;
 
-
     private void Awake()
     {
         Instance = this;
@@ -21,13 +20,31 @@ public class ToolbarController : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < Items.Count;i++)
+        if (ToolItem == null || BottomPanel == null)
         {
-            GameObject gameObject = Instantiate(ToolItem,BottomPanel.transform);
-            gameObject.name = Items[i].name;
-            //gameObject.AddComponent<Image>().sprite = Items[i].sprite;
-            //gameObject.transform.parent = BottomPanel.transform;
+            Debug.LogError("ToolItem or BottomPanel is not assigned!");
+            return;
+        }
 
+        for (int i = 0; i < Items.Count; i++)
+        {
+            // Ensure the current item and its sprite are not null
+            if (Items[i] == null)
+            {
+                Debug.LogError("Item at index " + i + " is null!");
+                continue;
+            }
+
+            if (Items[i].sprite == null)
+            {
+                Debug.LogError("Sprite is null for item: " + Items[i].name);
+                continue;
+            }
+
+            GameObject gameObject = Instantiate(ToolItem, BottomPanel.transform);
+            gameObject.name = Items[i].name;
+
+            gameObject.GetComponent<Image>().sprite = Items[i].sprite;
         }
     }
 
@@ -36,7 +53,6 @@ public class ToolbarController : MonoBehaviour
     {
 
     }
-    
 }
 
 [Serializable]
