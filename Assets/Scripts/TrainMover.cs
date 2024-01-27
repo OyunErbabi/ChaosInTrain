@@ -52,7 +52,7 @@ public class TrainMover : MonoBehaviour
         yield return new WaitForSeconds(2);
         while (RunTrain)
         {
-            GameObject _TempObject = Instantiate(Light,new Vector3(20, 2.33f, 0),Quaternion.identity);
+            GameObject _TempObject = Instantiate(Light,new Vector3(20, 1.5f, 0),Quaternion.identity);
             _TempObject.transform.DOMoveX(-20, 1);
             yield return new WaitForSeconds(1f);
             Destroy(_TempObject);
