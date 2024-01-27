@@ -12,9 +12,16 @@ public class PassengerController : MonoBehaviour
 
     public Animator animator;
     bool sitting;
-    
+
+    public GameObject ColliderDetector;
+    GameObject SpawnedDetector;
+
+    public float DetectorHeight;
+
     private void Start()
     {
+        SpawnedDetector = Instantiate(ColliderDetector, transform.position, Quaternion.identity);
+        SpawnedDetector.GetComponent<PassengerColliderDetector>().controller = this;
         StartCoroutine(LateStart());
     }
 
@@ -44,6 +51,16 @@ public class PassengerController : MonoBehaviour
         {
             MoveTowardsTarget();
             SetPassengerFaceDirection();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Fall();
+        }
+
+        if(SpawnedDetector != null)
+        {
+            SpawnedDetector.transform.position = new Vector3(transform.position.x, transform.position.y + DetectorHeight, transform.position.z);
         }
     }
 
@@ -107,7 +124,13 @@ public class PassengerController : MonoBehaviour
             }
         }
 
-       
+
+    }
+
+    public void Fall()
+    {
+        targetPosition = null;
+        animator.SetTrigger("Fall");
     }
 
     void SetPassengerFaceDirection()
@@ -123,29 +146,7 @@ public class PassengerController : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(0, -180, 0);
         }
-
-        //if(GetComponent<SpriteRenderer>() == null)
-        //{
-        //    if (direction.x > 0)
-        //    {
-        //        GetComponent<SpriteRenderer>().flipX = false;
-        //    }
-        //    else if (direction.x < 0)
-        //    {
-        //        GetComponent<SpriteRenderer>().flipX = true;
-        //    }
-        //}
-        //else
-        //{
-        //    if (direction.x > 0)
-        //    {
-        //        transform.rotation = Quaternion.Euler(0, -180, 0);
-        //    }
-        //    else if (direction.x < 0)
-        //    {
-        //        transform.rotation = Quaternion.Euler(0, 0, 0);
-        //    }
-        //}
-
     }
+
+   
 }
