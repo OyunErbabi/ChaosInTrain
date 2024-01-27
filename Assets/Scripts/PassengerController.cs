@@ -29,7 +29,11 @@ public class PassengerController : MonoBehaviour
             targetPosition = target.transform;
         }
 
-        animator = GetComponent<Animator>();
+        if(animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+
         characterController = GetComponent<CharacterController>();
         Instantiate(Smoke, transform.position, Quaternion.identity);
     }
@@ -86,6 +90,7 @@ public class PassengerController : MonoBehaviour
             sitting = true;
             animator.SetBool("Walk", false);
             targetPosition.gameObject.GetComponent<SeatController>().SitOnSeat();
+            animator.SetTrigger("Sit");
         }
         else
         {
@@ -98,6 +103,7 @@ public class PassengerController : MonoBehaviour
                 sitting = true;
                 animator.SetBool("Walk", false);
                 targetPosition.gameObject.GetComponent<SeatController>().SitOnSeat();
+                animator.SetTrigger("Sit");
             }
         }
 
@@ -108,13 +114,38 @@ public class PassengerController : MonoBehaviour
     {
         Vector3 direction = targetPosition.position - transform.position;
         direction.y = 0f;
+
         if (direction.x > 0)
         {
-            GetComponent<SpriteRenderer>().flipX = false;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
         else if (direction.x < 0)
         {
-            GetComponent<SpriteRenderer>().flipX = true;
+            transform.rotation = Quaternion.Euler(0, -180, 0);
         }
+
+        //if(GetComponent<SpriteRenderer>() == null)
+        //{
+        //    if (direction.x > 0)
+        //    {
+        //        GetComponent<SpriteRenderer>().flipX = false;
+        //    }
+        //    else if (direction.x < 0)
+        //    {
+        //        GetComponent<SpriteRenderer>().flipX = true;
+        //    }
+        //}
+        //else
+        //{
+        //    if (direction.x > 0)
+        //    {
+        //        transform.rotation = Quaternion.Euler(0, -180, 0);
+        //    }
+        //    else if (direction.x < 0)
+        //    {
+        //        transform.rotation = Quaternion.Euler(0, 0, 0);
+        //    }
+        //}
+
     }
 }

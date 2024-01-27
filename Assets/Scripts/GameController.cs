@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
         Instance = this;
     }
 
-    public GameObject Passenger;
+    public List<GameObject> Passenger;
     public List<GameObject> Seats;
     public List<GameObject> TakenSeats;
     public GameObject train;
@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour
         {
             TrainController.Instance.OpenDoors();
             yield return new WaitForSeconds(2.5f);
-            Instantiate(Passenger);
+            Instantiate(Passenger[Random.Range(0,Passenger.Count)]);
             yield return new WaitForSeconds(2.5f);
             TrainController.Instance.CloseDoors();
             yield return new WaitForSeconds(2f);
