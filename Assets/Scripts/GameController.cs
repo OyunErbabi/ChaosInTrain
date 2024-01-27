@@ -4,9 +4,29 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    public static GameController Instance;
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     public GameObject Passenger;
+    public List<GameObject> Seats;
+    public List<GameObject> TakenSeats;
+    public GameObject train;
+
     private void Start()
     {
+        Seats = new List<GameObject>();
+
+        foreach (Transform child in train.transform)
+        {
+            if (child.CompareTag("Seat"))
+            {
+                Seats.Add(child.gameObject);
+            }
+        }
+
         StartGame();
     }
 

@@ -11,9 +11,24 @@ public class PassengerController : MonoBehaviour
     public GameObject Smoke;
 
     public Animator animator;
-
+    bool sitting;
+    
     private void Start()
     {
+        StartCoroutine(LateStart());
+    }
+
+    [System.Obsolete]
+    IEnumerator LateStart()
+    {
+        yield return null;
+
+        GameObject target = FindEmptySeat();
+        if (target != null)
+        {
+            targetPosition = target.transform;
+        }
+
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
         Instantiate(Smoke, transform.position, Quaternion.identity);
@@ -21,11 +36,34 @@ public class PassengerController : MonoBehaviour
 
     void Update()
     {
-        if(targetPosition != null)
+        if(targetPosition != null && !sitting)
         {
             MoveTowardsTarget();
             SetPassengerFaceDirection();
         }
+    }
+
+    [System.Obsolete]
+    GameObject FindEmptySeat()
+    {
+        List<GameObject> EmptySeats = new List<GameObject>();
+        EmptySeats.Clear();
+        GameObject output = null;
+
+        foreach (var item in GameController.Instance.Seats)
+        {
+            if (item.GetComponent<SeatController>().status == SeatStatus.Empty || item.GetComponent<SeatController>().status == SeatStatus.Glued)
+            {
+                EmptySeats.Add(item);
+            }
+        }
+
+        if (EmptySeats.Count > 0)
+        {
+            output = EmptySeats[Random.RandomRange(0, EmptySeats.Count - 1)];
+        }
+        
+        return output;
     }
 
     void MoveTowardsTarget()
@@ -45,7 +83,9 @@ public class PassengerController : MonoBehaviour
 
         if (Vector3.Distance(transform.position,targetPosition.position)< 0.1f)
         {
+            sitting = true;
             animator.SetBool("Walk", false);
+            targetPosition.gameObject.GetComponent<SeatController>().SitOnSeat();
         }
         else
         {
@@ -55,7 +95,9 @@ public class PassengerController : MonoBehaviour
             }
             else
             {
+                sitting = true;
                 animator.SetBool("Walk", false);
+                targetPosition.gameObject.GetComponent<SeatController>().SitOnSeat();
             }
         }
 

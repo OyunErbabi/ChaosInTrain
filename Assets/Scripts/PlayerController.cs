@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using DG.Tweening;
 using Vector3 = UnityEngine.Vector3;
 
 
@@ -15,6 +16,10 @@ public class PlayerController : MonoBehaviour
     GameObject nearestSeat;
 
     public Animator animator;
+
+    public float MinX;
+    public float MaxX;
+
     private void Start()
     {
         train = GameObject.Find("Train");
@@ -34,31 +39,40 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        Vector3 move = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        if (Mathf.Abs(move.x) > 0)
+        if(transform.position.x < MaxX  && transform.position.x > MinX)
         {
-            animator.SetBool("Walk", true);
+            Vector3 move = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+
+            if (Mathf.Abs(move.x) > 0)
+            {
+                animator.SetBool("Walk", true);
+            }
+            else
+            {
+                animator.SetBool("Walk", false);
+            }
+
+            FlipCharacter();
+            controller.Move(move * Time.deltaTime * 10);
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                FindNearestSeat();
+                if (nearestSeat != null)
+                {
+                    nearestSeat.GetComponent<SeatController>().ToggleSeatStatus();
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                BananaController.Instance.PlaceBananaAtPlayerFeet();
+            }
         }
         else
         {
+            transform.DOMove ( new Vector3(Mathf.Clamp(transform.position.x, MinX+0.001f, MaxX-0.001f),transform.position.y,transform.position.z),0.1f);
             animator.SetBool("Walk", false);
-        }
-
-        FlipCharacter();
-        controller.Move(move * Time.deltaTime * 10);
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            FindNearestSeat();
-            if (nearestSeat != null)
-            {
-                nearestSeat.GetComponent<SeatController>().ToggleSeatStatus();
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            BananaController.Instance.PlaceBananaAtPlayerFeet();
         }
 
     }
