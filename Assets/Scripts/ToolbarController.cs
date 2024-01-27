@@ -25,7 +25,7 @@ public class ToolbarController : MonoBehaviour
         {
             GameObject gameObject = Instantiate(ToolItem,BottomPanel.transform);
             gameObject.name = Items[i].name;
-            gameObject.AddComponent<Image>().sprite = Items[i].sprite;
+            //gameObject.AddComponent<Image>().sprite = Items[i].sprite;
             //gameObject.transform.parent = BottomPanel.transform;
 
         }

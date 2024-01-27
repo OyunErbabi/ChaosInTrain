@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     GameObject train;
 
     GameObject nearestSeat;
+
+    public Animator animator;
     private void Start()
     {
         train = GameObject.Find("Train");
@@ -31,7 +33,17 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector3 move = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        if (Mathf.Abs(move.x) > 0)
+        {
+            animator.SetBool("Walk", true);
+        }
+        else
+        {
+            animator.SetBool("Walk", false);
+        }
+
+        FlipCharacter();
         controller.Move(move * Time.deltaTime * 10);
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -45,6 +57,18 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void FlipCharacter()
+    {
+        if (Input.GetAxisRaw("Horizontal") > 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
+        else if (Input.GetAxisRaw("Horizontal") < 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+        }
+
+    }
 
     void FindNearestSeat()
     {
