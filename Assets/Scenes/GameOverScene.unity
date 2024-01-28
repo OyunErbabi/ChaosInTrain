@@ -318,6 +318,22 @@ PrefabInstance:
       propertyPath: m_FontData.m_AlignByGeometry
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3662763994996096990, guid: aba252f65b345e244a44716f8a76ec93, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4170267761779736243, guid: aba252f65b345e244a44716f8a76ec93, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4576830009168996930, guid: aba252f65b345e244a44716f8a76ec93, type: 3}
+      propertyPath: levelTextObj
+      value: 
+      objectReference: {fileID: 1426799909}
+    - target: {fileID: 4576830009168996930, guid: aba252f65b345e244a44716f8a76ec93, type: 3}
+      propertyPath: TryAgainButtonObj
+      value: 
+      objectReference: {fileID: 1066190330}
     - target: {fileID: 7154192363975113212, guid: aba252f65b345e244a44716f8a76ec93, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -414,6 +430,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7752868833832937259, guid: aba252f65b345e244a44716f8a76ec93, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7875760227696762240, guid: aba252f65b345e244a44716f8a76ec93, type: 3}
       propertyPath: m_Name
       value: GameOver
@@ -423,6 +443,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aba252f65b345e244a44716f8a76ec93, type: 3}
+--- !u!1 &1066190330 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3662763994996096990, guid: aba252f65b345e244a44716f8a76ec93, type: 3}
+  m_PrefabInstance: {fileID: 377439685}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1079142846 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7376135504373803220, guid: aba252f65b345e244a44716f8a76ec93, type: 3}
@@ -541,6 +566,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1426799909 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4170267761779736243, guid: aba252f65b345e244a44716f8a76ec93, type: 3}
+  m_PrefabInstance: {fileID: 377439685}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1796120908
 GameObject:
   m_ObjectHideFlags: 0

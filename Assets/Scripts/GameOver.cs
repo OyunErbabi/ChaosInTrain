@@ -11,7 +11,11 @@ public class GameOver : MonoBehaviour
     
     public Image level;
     public TMP_Text levelText;
+    public GameObject levelTextObj;
+    public GameObject TryAgainButtonObj;
     public Image player;
+
+    float AnimationSpeed = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -29,12 +33,29 @@ public class GameOver : MonoBehaviour
                 // MovePlayerBack();
             });
         player.DOFade(5, 4);
+
+        StartCoroutine(FadeAnim());
+        TryAgainButtonObj.transform.DOShakeRotation(5,35,5);
     }
 
     // Update is called once per frame
     void Update()
     {
-        levelText.DOFade(40, 4);
+        
+    }
+    IEnumerator FadeAnim()
+    {
+        while (true)
+        {
+            levelTextObj.transform.DOScale(Vector3.one * 1.25f, AnimationSpeed);
+            yield return new WaitForSeconds(AnimationSpeed);
+            levelTextObj.transform.DOScale(Vector3.one, AnimationSpeed);
+            yield return new WaitForSeconds(AnimationSpeed);
+        }
+    }
+    private void OnDisable()
+    {
+        levelTextObj.transform.DOKill();
     }
 
     public void Quit()
