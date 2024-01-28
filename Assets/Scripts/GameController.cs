@@ -24,6 +24,8 @@ public class GameController : MonoBehaviour
     public GameObject train;
     public bool isOver;
 
+    public GameObject GameOverCircle;
+
     private void Start()
     {
         Seats = new List<GameObject>();
@@ -41,18 +43,28 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if (isOver)
-        {
-            // Start the coroutine to introduce a delay before changing the scene
-            StartCoroutine(DelayedSceneChange());
-        }
+        //if (isOver)
+        //{
+        //    // Start the coroutine to introduce a delay before changing the scene
+            
+            
+        //}
+    }
+
+    public void GameOverCallBack()
+    {
+        StartCoroutine(DelayedSceneChange());
     }
 
     IEnumerator DelayedSceneChange()
     {
         // Wait for 2 seconds
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         PlayerPrefs.SetInt("Level", levelCount);
+        GameOverCircle.transform.localScale = Vector3.zero;
+        GameOverCircle.SetActive(true);
+        GameOverCircle.transform.DOScale(Vector3.one * 30, 1);
+        yield return new WaitForSeconds(1f);
         // Change the scene after the delay
         SceneManager.LoadScene(GameOverScene);
     }

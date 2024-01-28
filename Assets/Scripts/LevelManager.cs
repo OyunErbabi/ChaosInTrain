@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
-    private int currentLevel = 0;
-    public Text levelText;
+    //private int currentLevel = 0;
+    //public Text levelText;
     public static LevelManager Instance;
     private void Awake()
     {
@@ -52,18 +52,18 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void IncrementLevel()
-    {
-        currentLevel++;
-        UpdateLevelText();
-    }
+    //public void IncrementLevel()
+    //{
+    //    currentLevel++;
+    //    UpdateLevelText();
+    //}
 
-    void UpdateLevelText()
-    {
-        if (levelText != null)
-        {
-            levelText.text = "Level: " + currentLevel.ToString();
-        }
-    }
+    //void UpdateLevelText()
+    //{
+    //    if (levelText != null)
+    //    {
+    //        levelText.text = "Level: " + currentLevel.ToString();
+    //    }
+    //}
 
 }

@@ -21,7 +21,8 @@ public class HealtController : MonoBehaviour
 
         if(CurrentHeart <= 0)
         {
-            GameController.Instance.isOver = true;
+            //GameController.Instance.isOver = true;
+            GameController.Instance.GameOverCallBack();
         }
 
         if (CurrentHeart > -1)

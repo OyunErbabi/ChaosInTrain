@@ -17,9 +17,13 @@ public class GameOver : MonoBehaviour
 
     float AnimationSpeed = 1f;
 
+    public GameObject GameoverImage;
+
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(BlackFx());
+
         SoundManager.instance.PlaySound(0);
         levelText.text = "Level " + PlayerPrefs.GetInt("Level").ToString();
         player.transform.DOMove(new Vector3(player.transform.position.x, 350, player.transform.position.z), 5)
@@ -38,11 +42,7 @@ public class GameOver : MonoBehaviour
         TryAgainButtonObj.transform.DOShakeRotation(5,35,5);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+ 
     IEnumerator FadeAnim()
     {
         while (true)
@@ -66,5 +66,12 @@ public class GameOver : MonoBehaviour
     public void TryAgain()
     {
         SceneManager.LoadScene("Home");
+    }
+
+    IEnumerator BlackFx()
+    {
+        GameoverImage.transform.DOScale(Vector3.zero, 1);
+        yield return new WaitForSeconds(1);
+        GameoverImage.SetActive(false);
     }
 }
