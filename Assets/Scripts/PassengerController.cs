@@ -17,9 +17,12 @@ public class PassengerController : MonoBehaviour
     GameObject SpawnedDetector;
 
     public float DetectorHeight;
+    GameObject trigerredObject;
+    GameObject SeatTrigger;
 
     private void Start()
     {
+        SoundManager.instance.PlaySound(0);
         SpawnedDetector = Instantiate(ColliderDetector, transform.position, Quaternion.identity);
         SpawnedDetector.GetComponent<PassengerColliderDetector>().controller = this;
         StartCoroutine(LateStart());
@@ -53,10 +56,7 @@ public class PassengerController : MonoBehaviour
             SetPassengerFaceDirection();
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            Fall();
-        }
+        
 
         if(SpawnedDetector != null)
         {
@@ -83,7 +83,7 @@ public class PassengerController : MonoBehaviour
         {
             output = EmptySeats[Random.RandomRange(0, EmptySeats.Count - 1)];
         }
-        
+
         return output;
     }
 
@@ -93,6 +93,9 @@ public class PassengerController : MonoBehaviour
         {
             return;
         }
+        //Burası Tekrar Çağırılmamalı
+        targetPosition.gameObject.GetComponent<SeatController>().SitOnSeat(this.gameObject);
+
 
         Vector3 direction = targetPosition.position - transform.position;
         direction.y = 0f;
@@ -106,7 +109,7 @@ public class PassengerController : MonoBehaviour
         {
             sitting = true;
             animator.SetBool("Walk", false);
-            targetPosition.gameObject.GetComponent<SeatController>().SitOnSeat();
+            //targetPosition.gameObject.GetComponent<SeatController>().SitOnSeat(this.gameObject);
             animator.SetTrigger("Sit");
         }
         else
@@ -119,7 +122,7 @@ public class PassengerController : MonoBehaviour
             {
                 sitting = true;
                 animator.SetBool("Walk", false);
-                targetPosition.gameObject.GetComponent<SeatController>().SitOnSeat();
+                targetPosition.gameObject.GetComponent<SeatController>().SitOnSeat(this.gameObject);
                 animator.SetTrigger("Sit");
             }
         }
@@ -127,10 +130,42 @@ public class PassengerController : MonoBehaviour
 
     }
 
-    public void Fall()
+    public void SitGlue(GameObject trigerObj)
     {
+        SeatTrigger = trigerObj;
+        SoundManager.instance.PlaySound(4);
+        SoundManager.instance.PlaySound(5);
+        StartCoroutine(DeleteFromScene());
+    }
+
+    public void Fall(GameObject trigerObject)
+    {
+        trigerredObject = trigerObject;
         targetPosition = null;
         animator.SetTrigger("Fall");
+        SoundManager.instance.PlaySound(1);
+        StartCoroutine(DeleteFromScene());
+    }
+
+    IEnumerator DeleteFromScene()
+    {
+        //yield return new WaitForSeconds(0.5f);
+        
+        yield return new WaitForSeconds(2);
+        Instantiate(Smoke, transform.position, Quaternion.identity);
+
+        if (trigerredObject != null)
+        {
+            Destroy(trigerredObject);
+        }
+
+        if (SeatTrigger!=null)
+        {
+            SeatTrigger.GetComponent<SeatController>().ToggleSeatStatus();
+        }
+
+        Destroy(SpawnedDetector);
+        Destroy(this.gameObject);
     }
 
     void SetPassengerFaceDirection()

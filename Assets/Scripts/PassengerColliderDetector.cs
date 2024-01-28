@@ -14,9 +14,8 @@ public class PassengerColliderDetector : MonoBehaviour
             if (!felt)
             {
                 felt = true;
-                controller.Fall();
+                controller.Fall(collision.gameObject);
             }
-
         }
 
     }

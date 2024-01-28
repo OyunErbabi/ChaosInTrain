@@ -8,6 +8,13 @@ using Vector3 = UnityEngine.Vector3;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance;
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+
     CharacterController controller;
     public List<GameObject> Seats;
 
@@ -80,10 +87,10 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 //FindNearestSeat();
-                if (nearestSeat != null)
-                {
-                    nearestSeat.GetComponent<SeatController>().ToggleSeatStatus();
-                }
+                //if (nearestSeat != null)
+                //{
+                //    nearestSeat.GetComponent<SeatController>().ToggleSeatStatus();
+                //}
             }
 
             if (Input.GetKeyDown(KeyCode.B))
@@ -98,6 +105,15 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+    public void UseGlue()
+    {
+        if (nearestSeat != null)
+        {
+            nearestSeat.GetComponent<SeatController>().ToggleSeatStatus();
+        }
+    }
+
 
     void FlipCharacter()
     {

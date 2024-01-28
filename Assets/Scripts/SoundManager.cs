@@ -1,55 +1,102 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using DG.Tweening.Core.Easing;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public AudioClip[] audioClips;
+    public static SoundManager instance;
+    public List<AudioClip> audioClips;
+    public List<AudioClip> MusicClips;
 
-    private AudioSource audioSource;
+    [Header("SFX")]
+    public AudioSource NonPitchSounds;
+    public AudioSource PitchSounds;
 
-    private void Start()
+    [Header("Music")]
+    public AudioSource MusicSound;
+
+    private void Awake()
     {
-        // Get the AudioSource component attached to the same GameObject
-        audioSource = GetComponent<AudioSource>();
-
-        // Make sure there are audio clips assigned in the inspector
-        if (audioClips.Length == 0)
+        if (instance == null)
         {
-            Debug.LogError("No audio clips assigned!");
+            instance = this;
         }
     }
 
-    private void Update()
+    // Sounds
+    // 0 - Spawn
+    // 1 - Mj Fall
+    // 2 - MetalPot2
+    // 3 - PoliceFootStep1
+    // 4 - PoliceFootStep2
+    // 5 - PrisonerFootStep1
+    // 6 - PrisonerFootStep2
+    // 7 - ButtonBeep
+    // 8 - TrueBeep
+    // 9 - FalseBeep
+    // 10 - WaterFill
+    // 11 - Confirm
+    // 12 - Beep Negative
+    // 13 - MetalDoor1
+    // 14 - MetalDoor2
+    // 15 - MemoryBeep
+    // 16 - MemoryBeep2
+    // 17 - Swing
+    // 18 - Swing2
+    // 19 - Swing3
+    // 20 - DoorShake
+    // 21 - CatchChoir1
+    // 22 - CatchChoir2
+    // 23 - CatchChoir3
+    // 24 - Police1
+    // 25 - Police2
+    // 26 - Police3
+    // 27 - Police4
+    // 28 - Police5
+    // 29 - Police6
+    // 30 - DoorOpenWood
+    // 31 - Prisoner1
+    // 32 - Prisoner2
+    // 33 - Prisoner3
+    // 34 - Prisoner4
+    // 35 - Electric Lever
+    // 36 - Electric Sfx
+    // 37 - FalseLock
+    // 38 - TakeKey
+
+
+    public void PlaySound(int index, float pitch = 1)
     {
-        // Check for button presses
-        CheckButtonPress();
+        //PitchSounds.volume = SaveManager.instance.saveData.SfxVolume;
+        PitchSounds.pitch = pitch;
+        PitchSounds.PlayOneShot(audioClips[index]);
     }
 
-    private void CheckButtonPress()
+    public void PlaySound(int index)
     {
-        // Check for numeric keys (1 to 9)
-        for (int i = 1; i <= 9; i++)
-        {
-            if (Input.GetKeyDown(i.ToString()))
-            {
-                PlayAudioClip(i - 1); // Subtract 1 because array indices start from 0
-                break;
-            }
-        }
+        //NonPitchSounds.volume = SaveManager.instance.saveData.SfxVolume;
+        NonPitchSounds.PlayOneShot(audioClips[index]);
     }
 
-    private void PlayAudioClip(int index)
+
+    public void PlayMusic()
     {
-        // Make sure the index is within the array bounds
-        if (index >= 0 && index < audioClips.Length)
-        {
-            // Stop any currently playing audio and play the selected clip
-            audioSource.Stop();
-            audioSource.clip = audioClips[index];
-            audioSource.Play();
-        }
-        else
-        {
-            Debug.LogError("Invalid audio clip index!");
-        }
+        //MusicSound.volume = SaveManager.instance.saveData.MusicVolume;
+        MusicSound.clip = MusicClips[0];
+        MusicSound.Play();
     }
+
+
+    public void StopMusic()
+    {
+        if (MusicSound.isPlaying)
+        {
+            MusicSound.Stop();
+        }
+
+    }
+
+
 }

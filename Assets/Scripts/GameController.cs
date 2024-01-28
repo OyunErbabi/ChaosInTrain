@@ -37,16 +37,29 @@ public class GameController : MonoBehaviour
 
     IEnumerator StartGameCor()
     {
+        yield return null;
         while (true)
         {
+            LevelManager.Instance.GiveRandomItem();
+            SoundManager.instance.PlaySound(2);
             TrainController.Instance.OpenDoors();
             yield return new WaitForSeconds(2.5f);
-            Instantiate(Passenger[Random.Range(0,Passenger.Count)]);
-            yield return new WaitForSeconds(2.5f);
+            for (int i = 0; i < 2; i++)
+            {
+                Instantiate(Passenger[Random.Range(0, Passenger.Count)]);
+                yield return new WaitForSeconds(1);
+            }
+            yield return new WaitForSeconds(1.5f);
             TrainController.Instance.CloseDoors();
             yield return new WaitForSeconds(2f);
             TrainMover.Instance.RunTrainWithTime(10f);
+            SoundManager.instance.PlaySound(3);
             yield return new WaitForSeconds(13f);
+            foreach (var item in ToolbarController.Instance.SpawnedItems)
+            {
+                item.GetComponent<ToolItemManager>().ResetItemCount();
+            }
+
         }
     }
 }

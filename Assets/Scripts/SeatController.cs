@@ -40,12 +40,13 @@ public class SeatController : MonoBehaviour
         {
             ChangeToGlue();
             status = SeatStatus.Glued;
+            SoundManager.instance.PlaySound(6);
         }
 
         isGlued = !isGlued;
     }
 
-    public void SitOnSeat()
+    public void SitOnSeat(GameObject passengerObject)
     {
         Debug.Log("On Sit");
         switch (status)
@@ -57,6 +58,7 @@ public class SeatController : MonoBehaviour
             case SeatStatus.Glued:
                 status = SeatStatus.TakenWithGlue;
                 GameController.Instance.TakenSeats.Add(gameObject);
+                passengerObject.GetComponent<PassengerController>().SitGlue(this.gameObject);
                 break;
             case SeatStatus.Taken:
                 //status = SeatStatus.Empty;
