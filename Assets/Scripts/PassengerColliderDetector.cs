@@ -9,8 +9,15 @@ public class PassengerColliderDetector : MonoBehaviour
     bool felt;
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
+
         if(collision.gameObject.tag == "banana")
         {
+            if (controller.sitting)
+            {
+                return;
+            }
+
             if (!felt)
             {
                 felt = true;

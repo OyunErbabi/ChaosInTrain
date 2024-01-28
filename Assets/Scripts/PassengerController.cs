@@ -11,7 +11,7 @@ public class PassengerController : MonoBehaviour
     public GameObject Smoke;
 
     public Animator animator;
-    bool sitting;
+    public bool sitting;
 
     public GameObject ColliderDetector;
     GameObject SpawnedDetector;
