@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MaınMenu : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
     public GameObject pauseScreen;
     public string LevelSelect;
     public GameObject volumeUp, volumeDown;
-    public string Level1;
+    public string Home;
     
 
     private bool volumeIsUp = true;
@@ -19,6 +19,7 @@ public class MaınMenu : MonoBehaviour
     void Start()
     {
         audioObjects = FindObjectsOfType<AudioSource>();
+        
     }
 
     // Update is called once per frame
@@ -27,6 +28,7 @@ public class MaınMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             PauseUnPause();
+           
         }
         
     }
@@ -45,6 +47,7 @@ public class MaınMenu : MonoBehaviour
     }
     public void VolumeUp()
     {
+       
         if (volumeIsUp)
         {
             return;
@@ -72,18 +75,20 @@ public class MaınMenu : MonoBehaviour
     }
     public void Settings()
     {
+        Debug.Log("acript calisti");
         volumeUp.SetActive(true);
         volumeDown.SetActive(true);
     }
 
     public void GoToLevelSelect()
     {
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         SceneManager.LoadScene(LevelSelect);
     }
     public void Play()
     {
-        SceneManager.LoadScene(Level1);
+        Debug.Log("playcalisti");
+        SceneManager.LoadScene("Home");
     }
     public void QuitGame()
     {

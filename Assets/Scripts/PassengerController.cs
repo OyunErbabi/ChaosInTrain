@@ -141,13 +141,21 @@ public class PassengerController : MonoBehaviour
 
 
     }
-
-    public void SitGlue(GameObject trigerObj)
+    public void SitGlue(GameObject triggerObj)
     {
-        SeatTrigger = trigerObj;
+        SeatTrigger = triggerObj;
         SoundManager.instance.PlaySound(4);
-        SoundManager.instance.PlaySound(5);
+        StartCoroutine(DelayedSoundPlay(7, 0.1f));
+        StartCoroutine(DelayedSoundPlay(5, 2f));
+
         StartCoroutine(DeleteFromScene());
+    }
+
+    IEnumerator DelayedSoundPlay(int soundIndex, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        SoundManager.instance.PlaySound(soundIndex);
     }
 
     public void Fall(GameObject trigerObject)
@@ -180,9 +188,9 @@ public class PassengerController : MonoBehaviour
         Destroy(SpawnedDetector);
         target.GetComponent<SeatController>().GetUpAndClearSeat(sitting);
         sitting = true;
-        
 
 
+        SoundManager.instance.PlaySound(8);
         Destroy(this.gameObject);
     }
 

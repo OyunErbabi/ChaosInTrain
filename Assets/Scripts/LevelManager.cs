@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
+    private int currentLevel = 0;
+    public Text levelText;
     public static LevelManager Instance;
     private void Awake()
     {
@@ -48,5 +51,19 @@ public class LevelManager : MonoBehaviour
 
         }
     }
-    
+
+    public void IncrementLevel()
+    {
+        currentLevel++;
+        UpdateLevelText();
+    }
+
+    void UpdateLevelText()
+    {
+        if (levelText != null)
+        {
+            levelText.text = "Level: " + currentLevel.ToString();
+        }
+    }
+
 }

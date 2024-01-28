@@ -21,10 +21,13 @@ public class HealtController : MonoBehaviour
 
         if(CurrentHeart <= 0)
         {
-            //gameover
+            GameController.Instance.isOver = true;
         }
 
-        hearts[CurrentHeart].SetActive(false);
+        if (CurrentHeart > -1)
+        {
+            hearts[CurrentHeart].SetActive(false);
+        }
 
     }
 

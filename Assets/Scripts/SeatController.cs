@@ -86,6 +86,7 @@ public class SeatController : MonoBehaviour
             case SeatStatus.Empty:
                 status = SeatStatus.Taken;
                 GameController.Instance.TakenSeats.Add(gameObject);
+                HealtController.Instance.Fail();
                 break;
             case SeatStatus.Glued:
                 status = SeatStatus.TakenWithGlue;

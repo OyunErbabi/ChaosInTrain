@@ -1,10 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
     public static GameController Instance;
+    public string GameOverScene;
+    public TMP_Text LevelText;
+    public int levelCount = 0;
+
     private void Awake()
     {
         Instance = this;
@@ -14,6 +22,7 @@ public class GameController : MonoBehaviour
     public List<GameObject> Seats;
     public List<GameObject> TakenSeats;
     public GameObject train;
+    public bool isOver;
 
     private void Start()
     {
@@ -30,6 +39,24 @@ public class GameController : MonoBehaviour
         StartGame();
     }
 
+    private void Update()
+    {
+        if (isOver)
+        {
+            // Start the coroutine to introduce a delay before changing the scene
+            StartCoroutine(DelayedSceneChange());
+        }
+    }
+
+    IEnumerator DelayedSceneChange()
+    {
+        // Wait for 2 seconds
+        yield return new WaitForSeconds(1f);
+        PlayerPrefs.SetInt("Level", levelCount);
+        // Change the scene after the delay
+        SceneManager.LoadScene(GameOverScene);
+    }
+
     void StartGame()
     {
         StartCoroutine(StartGameCor());
@@ -40,6 +67,8 @@ public class GameController : MonoBehaviour
         yield return null;
         while (true)
         {
+            levelCount++;
+            LevelText.text = "Level " + levelCount;
             LevelManager.Instance.GiveRandomItem();
             SoundManager.instance.PlaySound(2);
             TrainController.Instance.OpenDoors();
@@ -59,7 +88,6 @@ public class GameController : MonoBehaviour
             {
                 item.GetComponent<ToolItemManager>().ResetItemCount();
             }
-
         }
     }
 }

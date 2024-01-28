@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using DG.Tweening.Core.Easing;
 using UnityEngine;
 
@@ -23,6 +24,16 @@ public class SoundManager : MonoBehaviour
         {
             instance = this;
         }
+    }
+    private void Start()
+    {
+       
+
+    }
+    private void Update()
+    {
+
+       
     }
 
     // Sounds
@@ -87,6 +98,7 @@ public class SoundManager : MonoBehaviour
         MusicSound.clip = MusicClips[0];
         MusicSound.Play();
     }
+   
 
 
     public void StopMusic()
