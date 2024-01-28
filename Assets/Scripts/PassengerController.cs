@@ -153,6 +153,7 @@ public class PassengerController : MonoBehaviour
     public void Fall(GameObject trigerObject)
     {
         trigerredObject = trigerObject;
+        trigerObject.GetComponent<BoxCollider2D>().enabled = false;
         targetPosition = null;
         animator.SetTrigger("Fall");
         SoundManager.instance.PlaySound(1);
@@ -177,8 +178,9 @@ public class PassengerController : MonoBehaviour
         }
 
         Destroy(SpawnedDetector);
+        target.GetComponent<SeatController>().GetUpAndClearSeat(sitting);
         sitting = true;
-        target.GetComponent<SeatController>().GetUpAndClearSeat();
+        
 
 
         Destroy(this.gameObject);

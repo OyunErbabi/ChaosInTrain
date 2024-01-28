@@ -15,7 +15,7 @@ public class SeatController : MonoBehaviour
 
     public SeatStatus status;
     public bool SeatInUse;
-    bool playerSitOnGlue;
+    bool playerSitOnGlue = false;
     private void Start()
     {
         renderer = GetComponent<SpriteRenderer>();
@@ -47,20 +47,26 @@ public class SeatController : MonoBehaviour
         isGlued = !isGlued;
     }
 
-    public void GetUpAndClearSeat()
+    public void GetUpAndClearSeat(bool state)
     {
-        if (playerSitOnGlue)
+        Debug.Log("GetUP");
+        if (state)
         {
             status = SeatStatus.Empty;
         }
-        else if(status == SeatStatus.Glued && !playerSitOnGlue) 
-        {
-            status = SeatStatus.Glued;
-        }
-        else
-        {
-            status = SeatStatus.Empty;
-        }
+
+        //if (playerSitOnGlue)
+        //{
+        //    status = SeatStatus.Empty;
+        //}
+        //else if(status == SeatStatus.Glued && !playerSitOnGlue) 
+        //{
+        //    status = SeatStatus.Glued;
+        //}
+        //else
+        //{
+        //    status = SeatStatus.Empty;
+        //}
 
         
         GameController.Instance.TakenSeats.Remove(gameObject);
@@ -99,6 +105,7 @@ public class SeatController : MonoBehaviour
     public void SeatSelected()
     {
         SeatInUse = true;
+
 
         //switch (status)
         //{

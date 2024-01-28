@@ -57,8 +57,10 @@ public class ToolItemManager : MonoBehaviour
                 CheckStatus();
                 break;
             case UiItemType.glue:
-                PlayerController.Instance.UseGlue();
-                itemCount = itemCount - 1;
+                if (PlayerController.Instance.UseGlue())
+                {
+                    itemCount = itemCount - 1;
+                }
                 CheckStatus();
                 break;
             case UiItemType.balloon:

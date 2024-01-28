@@ -106,12 +106,17 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void UseGlue()
+    public bool UseGlue()
     {
         if (nearestSeat != null)
         {
+            if(nearestSeat.GetComponent<SeatController>().status == SeatStatus.Taken || nearestSeat.GetComponent<SeatController>().status == SeatStatus.Glued)
+            {
+                return false;
+            }
             nearestSeat.GetComponent<SeatController>().ToggleSeatStatus();
         }
+        return true;
     }
 
 

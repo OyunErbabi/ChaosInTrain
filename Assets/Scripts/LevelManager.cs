@@ -23,10 +23,11 @@ public class LevelManager : MonoBehaviour
 
     public void GiveRandomItem()
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 2; i++)
         {
-            int randomItem = Random.Range(0, 3);
-            Debug.Log("Random İtem :" + randomItem);
+            int randomItem = Random.Range(0, 2);
+            
+            //Debug.Log("Random İtem :" + randomItem);
 
             switch (randomItem)
             {
