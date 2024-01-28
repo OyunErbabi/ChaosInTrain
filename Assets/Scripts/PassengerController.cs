@@ -19,7 +19,9 @@ public class PassengerController : MonoBehaviour
     public float DetectorHeight;
     GameObject trigerredObject;
     GameObject SeatTrigger;
+    GameObject target;
 
+    bool SeatSelected;
     private void Start()
     {
         SoundManager.instance.PlaySound(0);
@@ -33,7 +35,7 @@ public class PassengerController : MonoBehaviour
     {
         yield return null;
 
-        GameObject target = FindEmptySeat();
+        target = FindEmptySeat();
         if (target != null)
         {
             targetPosition = target.transform;
@@ -75,7 +77,10 @@ public class PassengerController : MonoBehaviour
         {
             if (item.GetComponent<SeatController>().status == SeatStatus.Empty || item.GetComponent<SeatController>().status == SeatStatus.Glued)
             {
-                EmptySeats.Add(item);
+                if (!item.GetComponent<SeatController>().SeatInUse)
+                {
+                    EmptySeats.Add(item);
+                }
             }
         }
 
@@ -93,8 +98,15 @@ public class PassengerController : MonoBehaviour
         {
             return;
         }
+
+        if (!SeatSelected)
+        {
+            SeatSelected = true;
+            //targetPosition.gameObject.GetComponent<SeatController>().SitOnSeat(this.gameObject);
+            targetPosition.gameObject.GetComponent<SeatController>().SeatSelected();
+        }
         //Burası Tekrar Çağırılmamalı
-        targetPosition.gameObject.GetComponent<SeatController>().SitOnSeat(this.gameObject);
+
 
 
         Vector3 direction = targetPosition.position - transform.position;
@@ -109,7 +121,7 @@ public class PassengerController : MonoBehaviour
         {
             sitting = true;
             animator.SetBool("Walk", false);
-            //targetPosition.gameObject.GetComponent<SeatController>().SitOnSeat(this.gameObject);
+            targetPosition.gameObject.GetComponent<SeatController>().SitOnSeat(this.gameObject);
             animator.SetTrigger("Sit");
         }
         else
@@ -165,6 +177,10 @@ public class PassengerController : MonoBehaviour
         }
 
         Destroy(SpawnedDetector);
+        sitting = true;
+        target.GetComponent<SeatController>().GetUpAndClearSeat();
+
+
         Destroy(this.gameObject);
     }
 
